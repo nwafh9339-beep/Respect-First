@@ -1,16 +1,200 @@
-<ul class="nav-links">
-    <!-- القسم الأول: جدول رقابة -->
-    <li class="admin-link" onclick="showPage('schedule-page')">جدول الرقابة</li>
-    
-    <!-- القسم الثاني: نظام باندات -->
-    <li class="admin-link" onclick="showPage('bans-page')">نظام الباندات</li>
-    
-    <!-- القسم الثالث: توزيع مسؤوليات -->
-    <li class="admin-link" onclick="showPage('roles-page')">توزيع المسؤوليات</li>
-    
-    <!-- القسم الرابع: مراجعة تقديمات -->
-    <li class="admin-link" onclick="showPage('review-page')">مراجعة التقديمات</li>
-    
-    <!-- القسم الخامس: التقديم (الوحيد اللي يظهر للكل) -->
-    <li onclick="showPage('apply-page')" style="border: 2px solid var(--accent-purple);">التقديم</li>
-</ul>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respect First | الرقابة</title>
+    <style>
+        /* تعريف الألوان البنفسجي والأسود */
+        :root {
+            --bg-black: #0a0a0a;
+            --sidebar-dark: #121212;
+            --accent-purple: #8a2be2;
+            --card-bg: #181818;
+            --text-white: #ffffff;
+            --text-gray: #b0b0b0;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* القائمة الجانبية */
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-dark);
+            border-left: 3px solid var(--accent-purple);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 5px 0 15px rgba(138, 43, 226, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-purple);
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-links li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #1f1f1f;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        .nav-links li:hover {
+            background-color: var(--accent-purple);
+            box-shadow: 0 0 15px var(--accent-purple);
+        }
+
+        /* إخفاء الأقسام الخاصة برمجياً */
+        .admin-only {
+            display: none;
+        }
+
+        /* محتوى الموقع */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #222;
+            border: 1px solid var(--accent-purple);
+            border-radius: 5px;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-purple);
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+        }
+
+        .admin-btn {
+            background: transparent;
+            border: 1px solid var(--accent-purple);
+            margin-top: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo">Respect First</div>
+        <ul class="nav-links">
+            <!-- ترتيب الأقسام حسب طلبك -->
+            <li class="admin-only" onclick="showPage('schedule')">القسم 1: جدول الرقابة</li>
+            <li class="admin-only" onclick="showPage('bans')">القسم 2: نظام الباندات</li>
+            <li class="admin-only" onclick="showPage('roles')">القسم 3: توزيع المسؤوليات</li>
+            <li class="admin-only" onclick="showPage('review')">القسم 4: مراجعة التقديمات</li>
+            
+            <!-- القسم الخامس هو الوحيد الذي يظهر للجميع -->
+            <li id="apply-btn" onclick="showPage('apply')">القسم 5: التقديم</li>
+        </ul>
+        <button class="admin-btn" onclick="loginAdmin()">دخول المسؤولين</button>
+    </nav>
+
+    <main class="main-content">
+        <!-- صفحة التقديم (تظهر للكل) -->
+        <section id="apply" class="page active">
+            <h1>روم التقديم</h1>
+            <div class="card">
+                <p>أهلاً بك في سيرفر ريسبكت فيرست، يرجى تعبئة بياناتك للتقديم على الرقابة:</p>
+                <input type="text" id="username" placeholder="اسمك في الديسكورد">
+                <textarea rows="4" placeholder="لماذا تريد الانضمام لفريق الرقابة؟"></textarea>
+                <button onclick="alert('تم إرسال طلبك بنجاح')">إرسال الطلب</button>
+            </div>
+        </section>
+
+        <!-- الأقسام المخفية -->
+        <section id="schedule" class="page">
+            <h1>جدول الرقابة اليومي</h1>
+            <div class="card"><p>هنا تظهر شفتات المراقبين وتوزيعهم على الرومات.</p></div>
+        </section>
+
+        <section id="bans" class="page">
+            <h1>نظام الباندات</h1>
+            <div class="card"><p>قائمة الأشخاص المحظورين وسجل المخالفات.</p></div>
+        </section>
+
+        <section id="roles" class="page">
+            <h1>توزيع المسؤوليات</h1>
+            <div class="card"><p>هنا يتم تحديد مهام كل رتبة إدارية.</p></div>
+        </section>
+
+        <section id="review" class="page">
+            <h1>مراجعة تقديمات الأعضاء</h1>
+            <div class="card"><p>خاص بالإدارة لمراجعة طلبات التقديم والقبول/الرفض.</p></div>
+        </section>
+    </main>
+
+    <script>
+        // وظيفة التنقل بين الأقسام
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // وظيفة دخول المسؤولين (لإظهار الأقسام المخفية)
+        function loginAdmin() {
+            const pass = prompt("أدخل كلمة مرور الإدارة لرؤية الأقسام:");
+            if (pass === "AdminRF") { // كلمة السر هي AdminRF
+                document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
+                alert("تم إظهار أقسام الإدارة بنجاح.");
+            } else {
+                alert("كلمة مرور خاطئة!");
+            }
+        }
+    </script>
+</body>
+</html>
