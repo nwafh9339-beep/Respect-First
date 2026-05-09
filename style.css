@@ -1,0 +1,39 @@
+:root {
+    --bg-dark: #23272a;
+    --sidebar-color: #2c2f33;
+    --accent-color: #7289da;
+    --text-white: #ffffff;
+}
+
+body {
+    margin: 0; background-color: var(--bg-dark); color: var(--text-white); font-family: 'Cairo', sans-serif;
+    display: flex; height: 100vh;
+}
+
+.sidebar {
+    width: 260px; background: var(--sidebar-color); padding: 20px;
+    border-left: 1px solid #444;
+}
+
+.logo { font-size: 24px; font-weight: bold; color: var(--accent-color); margin-bottom: 30px; text-align: center; }
+
+.nav-links { list-style: none; padding: 0; }
+.nav-links li {
+    padding: 15px; margin-bottom: 10px; background: #36393f; border-radius: 8px;
+    cursor: pointer; transition: 0.3s; text-align: center;
+}
+.nav-links li:hover { background: var(--accent-color); }
+
+/* إخفاء أقسام الإدارة */
+.admin-link { display: none; }
+
+.content { flex: 1; padding: 40px; overflow-y: auto; }
+.page { display: none; }
+.page.active { display: block; }
+
+.card { background: #2f3136; padding: 20px; border-radius: 10px; max-width: 500px; }
+input, textarea {
+    width: 100%; padding: 12px; margin: 10px 0; background: #40444b;
+    border: none; border-radius: 5px; color: white; box-sizing: border-box;
+}
+.btn-send { width: 100%; padding: 15px; background: #43b581; border: none; color: white; cursor: pointer; border-radius: 5px; font-size: 16px; }
