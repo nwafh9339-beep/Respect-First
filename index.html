@@ -1,52 +1,16 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Respect First | Control Panel</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <!-- القائمة الجانبية -->
-    <nav class="sidebar">
-        <div class="logo">Respect First</div>
-        <ul class="nav-links">
-            <li onclick="showPage('apply-page')">التقديم للرقابة</li>
-            <!-- أقسام الإدارة مخفية بـ CSS افتراضياً -->
-            <li class="admin-link" onclick="showPage('schedule-page')">جدول الرقابة</li>
-            <li class="admin-link" onclick="showPage('bans-page')">نظام الباندات</li>
-            <li class="admin-link" onclick="showPage('roles-page')">توزيع المسؤوليات</li>
-            <li class="admin-link" onclick="showPage('review-page')">مراجعة التقديمات</li>
-        </ul>
-        <div class="user-info" id="user-info">
-            <button onclick="login()">تسجيل دخول (Admin)</button>
-        </div>
-    </nav>
-
-    <main class="content">
-        <!-- صفحة التقديم -->
-        <section id="apply-page" class="page active">
-            <h1>التقديم على رتبة رقابة</h1>
-            <div class="card">
-                <input type="text" id="discord-id" placeholder="اسمك في الديسكورد (ID)">
-                <textarea id="experience" placeholder="تكلم عن خبرتك في الرقابة..."></textarea>
-                <button class="btn-send" onclick="sendApplication()">إرسال الطلب</button>
-            </div>
-        </section>
-
-        <!-- صفحة الباندات (للمثال) -->
-        <section id="bans-page" class="page">
-            <h1>نظام الباندات</h1>
-            <table>
-                <tr><th>المخالف</th><th>السبب</th><th>المسؤول</th></tr>
-                <tr><td>فلان#123</td><td>تخريب</td><td>المراقب أحمد</td></tr>
-            </table>
-        </section>
-
-        <!-- باقي الصفحات تضاف بنفس الطريقة -->
-    </main>
-
-    <script src="script.js"></script>
-</body>
-</html>
+<ul class="nav-links">
+    <!-- القسم الأول: جدول رقابة -->
+    <li class="admin-link" onclick="showPage('schedule-page')">جدول الرقابة</li>
+    
+    <!-- القسم الثاني: نظام باندات -->
+    <li class="admin-link" onclick="showPage('bans-page')">نظام الباندات</li>
+    
+    <!-- القسم الثالث: توزيع مسؤوليات -->
+    <li class="admin-link" onclick="showPage('roles-page')">توزيع المسؤوليات</li>
+    
+    <!-- القسم الرابع: مراجعة تقديمات -->
+    <li class="admin-link" onclick="showPage('review-page')">مراجعة التقديمات</li>
+    
+    <!-- القسم الخامس: التقديم (الوحيد اللي يظهر للكل) -->
+    <li onclick="showPage('apply-page')" style="border: 2px solid var(--accent-purple);">التقديم</li>
+</ul>
