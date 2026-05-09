@@ -1,47 +1,20 @@
-// تبديل الصفحات
-function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-}
-
-// محاكاة تسجيل الدخول (في الحقيقة يتم عبر Discord API)
-function login() {
-    const password = prompt("أدخل رمز الإدارة:");
-    if (password === "123") { // باسورد وهمي للتجربة
-        document.querySelectorAll('.admin-link').forEach(el => el.style.display = 'block');
-        alert("أهلاً بك يا مسؤول");
-    } else {
-        alert("الرمز خطأ!");
-    }
-}
-
-// إرسال الطلب لـ Discord Webhook
-async function sendApplication() {
-    const user = document.getElementById('discord-id').value;
-    const exp = document.getElementById('experience').value;
-    const webhookURL = "هنا_تحط_رابط_الويب_هوك";
-
-    if(!user || !exp) return alert("عبّ البيانات أولاً!");
-
-    const payload = {
-        embeds: [{
-            title: "تقديم جديد لـ Respect First",
-            color: 5814783,
-            fields: [
-                { name: "صاحب التقديم", value: user },
-                { name: "الخبرة", value: exp }
-            ]
-        }]
-    };
-
-    try {
-        await fetch(webhookURL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+// دالة لتحديد من هو "الشخص المحدد" (الإداري)
+function checkPermissions() {
+    // هنا نضع "رمز دخول" بسيط كمثال
+    const secretCode = prompt("أدخل رمز الإدارة لرؤية الأقسام المخفية (أو اضغط إلغاء للتقديم فقط):");
+    
+    if (secretCode === "RF100") { // الرمز السري هنا RF100
+        document.querySelectorAll('.admin-link').forEach(el => {
+            el.style.display = 'block'; // إظهار الأقسام الأربعة الأولى
         });
-        alert("تم إرسال طلبك للإدارة!");
-    } catch (err) {
-        alert("خطأ في الإرسال");
+        alert("تم تفعيل صلاحيات الإدارة.");
+    } else {
+        document.querySelectorAll('.admin-link').forEach(el => {
+            el.style.display = 'none'; // إخفاء الأقسام عن البقية
+        });
+        alert("أنت الآن في وضع 'التقديم' فقط.");
     }
 }
+
+// تشغيل الفحص عند تحميل الموقع
+window.onload = checkPermissions;
